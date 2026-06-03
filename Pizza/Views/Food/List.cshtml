@@ -1,14 +1,19 @@
 ﻿
-	<h1>Їжа</h1>
-	<h3>@Model.currCategory</h3>
+<h1>Їжа</h1>
+<h3>@Model.currCategory</h3>
+<div class="row mt-5 mb-2">
 	@{
-	   foreach(var food in Model.allFoods)
-	   {
-		 <div>
-			 <h2>Назва: @food.name</h2>
-			 <p>Ціна: @food.price.ToString("c")</p>
-		</div>
-	   }
+		foreach (var food in Model.allFoods)
+		{
+	<div class="col-lg-4">
+		<img class="img-thumbnail" src="@food.img" alt="@food.name" />
+		<h2>@food.name</h2>
+		<p>@food.shortDesc</p>
+		<p>Ціна: @food.price.ToString("c")</p>
+		<p><a class="btn btn-warning" href="#">Детальніше</a></p>
+	</div>	
+		}
 	}
+	</div>
 
 
