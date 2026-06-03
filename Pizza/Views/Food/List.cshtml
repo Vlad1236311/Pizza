@@ -1,0 +1,14 @@
+﻿
+	<h1>Їжа</h1>
+	<h3>@Model.currCategory</h3>
+	@{
+	   foreach(var food in Model.allFoods)
+	   {
+		 <div>
+			 <h2>Назва: @food.name</h2>
+			 <p>Ціна: @food.price.ToString("c")</p>
+		</div>
+	   }
+	}
+
+
