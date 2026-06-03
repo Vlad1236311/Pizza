@@ -47,7 +47,7 @@ namespace Pizza.Data.mocks
                         name = "Піца Гавайська", 
                         shortDesc = "Тропічний смак", 
                         longDesc = "Піца з куркою, ананасами та моцарелою на томатному соусі.", 
-                        img = "/img/havaiska.jpg", price = 140, 
+                        img = "/img/havaiska.jpg", price = 341, 
                         isFavourite = false, 
                         available = true, 
                         Category = _categoryFood.AllCategories.First() 
@@ -81,7 +81,7 @@ namespace Pizza.Data.mocks
                         shortDesc = "Солодко-солоний делікатес",
                         longDesc = "Піца з соковитою грушею, блакитним сиром та медовими нотками для вишуканого гастрономічного досвіду.",
                         img = "/img/pieces.jpg",
-                        price = 170,
+                        price = 329,
                         isFavourite = true,
                         available = true,
                         Category = _categoryFood.AllCategories.First()
@@ -93,7 +93,7 @@ namespace Pizza.Data.mocks
                         shortDesc = "Класичний італійський смак",
                         longDesc = "Піца з томатним соусом, свіжими томатами, моцарелою та ароматним базиліком.",
                         img = "/img/marharyta.jpg",
-                        price = 120,
+                        price = 314,
                         isFavourite = false,
                         available = true,
                         Category = _categoryFood.AllCategories.First()
@@ -105,7 +105,7 @@ namespace Pizza.Data.mocks
                         shortDesc = "Легка та середземноморська",
                         longDesc = "Піца зі свіжим шпинатом, сиром фета, оливковою олією та моцарелою, що створює ніжний і збалансований смак.",
                         img = "/img/shpynatfeta.jpg",
-                        price = 190,
+                        price = 340,
                         isFavourite = true,
                         available = true,
                         Category = _categoryFood.AllCategories.First()
@@ -177,8 +177,8 @@ namespace Pizza.Data.mocks
                     },
                                         new Food
                     {
-                        name = "Sprite.jpg",
-                        shortDesc = "0.5 мл",
+                        name = "Sprite",
+                        shortDesc = "0.500 мл",
                         longDesc = "газований",
                         img = "/img/Sprite.jpg",
                         price = 57,
