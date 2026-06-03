@@ -8,9 +8,9 @@ namespace Pizza.ViewModels
 {
     public class FoodsListViewModels
     {
-       public IEnumerable<Food> allFoods { get; set; }  
+       public IEnumerable<Food> AllFoods { get; set; }  
 
-       public string currCategory { get; set; }
+       public string CurrentCategory { get; set; }
 
     }
 	
