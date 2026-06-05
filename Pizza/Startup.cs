@@ -10,15 +10,28 @@ using Microsoft.Extensions.Hosting;
 using Pizza.Data.Models;
 using Pizza.Data.mocks;
 using Pizza.Data.interfaces;
+using Microsoft.Extensions.Configuration;
+using Pizza.Data;
+using Pizza.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pizza
 {
     public class Startup
     {
+
+        private IConfigurationRoot _confString;
+
+        public Startup(IWebHostEnvironment hostEnv)
+        {
+            _confString = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("dbsettings.json").Build();
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IAllFood, MockFood>();
-            services.AddTransient<IFoodCategory, MockCategory>();
+            services.AddDbContext<AppDBcontent>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IAllFood, PizzaRepository>();
+            services.AddTransient<IFoodCategory, CategoryRepository>();
             services.AddControllersWithViews();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -26,6 +39,12 @@ namespace Pizza
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                AppDBcontent content = scope.ServiceProvider.GetRequiredService<AppDBcontent>();
+                DBObjects.Initial(content);
+            }
 
             app.UseRouting();
 

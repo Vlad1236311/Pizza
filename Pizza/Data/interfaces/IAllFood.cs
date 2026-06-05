@@ -9,7 +9,7 @@ namespace Pizza.Data.interfaces
     public interface IAllFood
     {
         IEnumerable<Food> Foods { get;  }
-        IEnumerable<Food> getFavFoods { get; set; }
+        IEnumerable<Food> getFavFoods { get; }
         Food getObjectFood(int foodId);
     }
 }
