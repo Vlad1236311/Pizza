@@ -1,0 +1,12 @@
+﻿@model PizzaCartViewModel
+<div class="containr">
+    @foreach (var el in Model.pizzaCart.listPizzaItems) 
+    {
+        <div class="alert alert-warning mt3">
+            <b>Піца:</b> @el.food.name <br />
+            <b>Ціна:</b> @el.food.price.ToString("c")
+            </div>
+    }
+    <hr />
+   <div class="btn btn-danger" asp-controller="Order">Оплатити замовлення</div> 
+    </div>   
