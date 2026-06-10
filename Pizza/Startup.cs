@@ -32,13 +32,20 @@ namespace Pizza
             services.AddDbContext<AppDBcontent>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
             services.AddTransient<IAllFood, PizzaRepository>();
             services.AddTransient<IFoodCategory, CategoryRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => PizzaCart.GetCart(sp));
+
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+            services.AddSession();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
 
             using (var scope = app.ApplicationServices.CreateScope())
             {

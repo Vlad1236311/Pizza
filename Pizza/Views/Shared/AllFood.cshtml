@@ -1,0 +1,9 @@
+﻿@model Food
+
+<div class="col-lg-4">
+		<img class="img-thumbnail" src="@Model.img" alt="@Model.name" />
+		<h2>@Model.name</h2>
+		<p>@Model.shortDesc</p>
+		<p>Ціна: @Model.price.ToString("c")</p>
+		<p><a class="btn btn-warning" href="#">Детальніше</a></p>
+	</div>	

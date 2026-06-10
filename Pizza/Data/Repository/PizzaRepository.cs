@@ -21,7 +21,7 @@ namespace Pizza.Data.Repository
 
         public IEnumerable<Food> getFavFoods => appDBcontent.Food.Where(p => p.isFavourite).Include(c => c.Category);
             
-        public Food getObjectFood(int foodId) => appDBcontent.Food.FirstOrDefault(p => p.Id == foodId);
+        public Food getObjectFood(int foodId) => appDBcontent.Food.FirstOrDefault(p => p.id == foodId);
 
     }
 }

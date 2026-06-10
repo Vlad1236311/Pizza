@@ -19,6 +19,8 @@ namespace Pizza.Data {
         public DbSet<Food> Food { get; set; }
         public DbSet<Category> Category { get; set; }
 
+        public DbSet<PizzaCartItem> PizzaCartItem { get; set; }
+
 
     }
 }

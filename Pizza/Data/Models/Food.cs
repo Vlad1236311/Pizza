@@ -8,7 +8,7 @@ namespace Pizza.Data.Models
     public class Food
     {
 
-        public int Id { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
         public string shortDesc { get; set; }
         public string longDesc { get; set; }
