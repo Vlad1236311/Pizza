@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Pizza.Data.interfaces;
+using Pizza.Data.Models;
 using Pizza.ViewModels;
 
 
@@ -21,15 +22,38 @@ namespace Pizza.Controllers
 			_allCategories = iFoodCategory;
 		}
 
-		public ViewResult List()
+		[Route("Food/List")]
+        [Route("Food/List/{category}")]
+        public ViewResult List(string category)
 		{
-            ViewBag.Title = "Сторінка з їжею";
-            FoodsListViewModels obj = new FoodsListViewModels();
-			obj.allFoods = _allFood.Foods;
-			obj.currCategory = "Піца";
-			obj.currCategory = "Напої";
+			string _category = category;
+            IEnumerable<Food> foods = null;
+			string currCategory = "";
+			if (string.IsNullOrEmpty(category))
+			{
+				foods = _allFood.Foods.OrderBy(i => i.id);
+			}
+			else
+			{
+				if (string.Equals("Pizza", category, StringComparison.OrdinalIgnoreCase)) { 
+				foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Піца")).OrderBy(i => i.id);
+                    currCategory = "Піца";
+                }
+                else if (string.Equals("Drink", category, StringComparison.OrdinalIgnoreCase))
+                {
+                    foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Напої")).OrderBy(i => i.id);
+                    currCategory = "Напої";
+                }
+            }
 
-            return View(obj);
+			var foodObj = new FoodsListViewModels
+			{
+				allFoods = foods,
+				currCategory = currCategory
+            };
+
+            ViewBag.Title = "Сторінка з їжею";
+            return View(foodObj);
 		}
 
     }
