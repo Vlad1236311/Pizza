@@ -32,6 +32,7 @@ namespace Pizza
             services.AddDbContext<AppDBcontent>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
             services.AddTransient<IAllFood, PizzaRepository>();
             services.AddTransient<IFoodCategory, CategoryRepository>();
+            services.AddTransient<IAllOrders, OrdersRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => PizzaCart.GetCart(sp));
