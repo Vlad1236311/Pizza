@@ -52,11 +52,15 @@ namespace Pizza
                 AppDBcontent content = scope.ServiceProvider.GetRequiredService<AppDBcontent>();
                 DBObjects.Initial(content);
             }
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "categoryFilter",
+                    pattern: "Food/{action}/{category?}",
+                    defaults: new { Controller = "Food", action = "List" });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
