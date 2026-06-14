@@ -1,3 +1,33 @@
 ﻿body {
     background: #fcfcfc;
 }
+.cart-item img {
+    width: 120px !important;
+    height: 120px !important;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cart-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.cart-info {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cart-img {
+        width: 180px;
+        height: 180px;
+    }
+}
