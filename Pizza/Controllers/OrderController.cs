@@ -1,38 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Pizza.Data;
 using Pizza.Data.interfaces;
 using Pizza.Data.Models;
 
 namespace Pizza.Controllers
 {
-    public class OrderController : Controller {
-
+    public class OrderController : Controller
+    {
         private readonly IAllOrders allOrders;
         private readonly PizzaCart shopCart;
 
-        public OrderController(IAllOrders allOrders, PizzaCart shopCart) {
+        public OrderController(IAllOrders allOrders, PizzaCart shopCart)
+        {
             this.allOrders = allOrders;
             this.shopCart = shopCart;
         }
 
-        public IActionResult Checkout() {
+        public IActionResult Checkout()
+        {
+            shopCart.listPizzaItems = shopCart.getPizzaItems();
+
+            ViewBag.CartTotal = shopCart.listPizzaItems.Sum(i => i.price);
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Checkout(Order order) {
-
+        public IActionResult Checkout(Order order)
+        {
             shopCart.listPizzaItems = shopCart.getPizzaItems();
 
-            if (shopCart.listPizzaItems.Count == 0) {
-                ModelState.AddModelError("", "У вас повинна бути хоча б одна піца!");
+            ViewBag.CartTotal = shopCart.listPizzaItems.Sum(i => i.price);
+
+            if (shopCart.listPizzaItems.Count == 0)
+            {
+                ModelState.AddModelError("", "Кошик порожній!");
             }
 
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
+                order.orderTime = DateTime.Now;
                 allOrders.createOrder(order);
                 return RedirectToAction("Complete");
             }
@@ -40,10 +48,11 @@ namespace Pizza.Controllers
             return View(order);
         }
 
-        public IActionResult Complete() {
-            ViewBag.Message = "Замовлення успішно оброблено!";
-            return View();
-        }
 
+        public IActionResult Complete()
+        {
+            TempData["Message"] = "🎉 Замовлення успішно оформлено!";
+            return RedirectToAction("Complete");
+        }
     }
 }

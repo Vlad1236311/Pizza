@@ -1,43 +1,533 @@
-﻿@model Order
+﻿
+@model Order
 
-<div class = "row">
-	<h3>Оформлення замовлення</h3>
-	<form asp-action="Checkout" method="post" class="form-horizontal">
-		<div class="form-group">
-			<label asp-for="name"></label>
-			<div class="col-md-5">
-				<input asp-for="name" class="form-control" />
-				<span asp-validation-for="name" class="text-danger"></span>
-				</div>
-		</div>
-		<div class="form-group">
-			<label asp-for="surname"></label>
-			<div class="col-md-5">
-				<input asp-for="surname" class="form-control" />
-				<span asp-validation-for="surname" class="text-danger"></span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label asp-for="address"></label>
-			<div class="col-md-5">
-				<input asp-for="address" class="form-control" />
-				<span asp-validation-for="address" class="text-danger"></span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label asp-for="phone"></label>
-			<div class="col-md-5">
-				<input asp-for="phone" class="form-control" />
-				<span asp-validation-for="phone" class="text-danger"></span>
-			</div>
-		</div>	
-		<div class="form-group">
-			<label asp-for="email"></label>
-			<div class="col-md-5">
-				<input asp-for="email" class="form-control" />
-				<span asp-validation-for="email" class="text-danger"></span>
-			</div>
-		</div>
-		<input class="btn btn-success" type="submit" value="Завершить замовлення" />
-	</form>
-</div>
+@{
+    var total = ViewBag.CartTotal ?? 0;
+}
+
+<h2 class="mb-4">Оформлення замовлення</h2>
+
+<form asp-action="Checkout" method="post">
+
+    <div class="accordion" id="checkoutAccordion">
+
+        <!-- Контактні дані -->
+        <div class="accordion-item">
+
+            <h2 class="accordion-header">
+                <button type="button"
+                        class="accordion-button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#step1">
+                    Контактні дані
+                </button>
+            </h2>
+
+            <div id="step1"
+                 class="accordion-collapse collapse show"
+                 data-bs-parent="#checkoutAccordion">
+
+                <div class="accordion-body">
+
+                   <input asp-for="name"
+                       id="name"
+                       class="form-control"
+                       placeholder="Ім'я" />
+                <span id="nameError" class="text-danger"></span>
+
+                <input asp-for="surname"
+                       id="surname"
+                       class="form-control mt-3"
+                       placeholder="Прізвище" />
+                <span id="surnameError" class="text-danger"></span>
+
+                <input asp-for="phone"
+                       id="phone"
+                       class="form-control mt-3"
+                       value="+380" />
+                <span id="phoneError" class="text-danger"></span>
+
+                <input asp-for="email"
+                       id="email"
+                       class="form-control mt-3"
+                       placeholder="E-mail" />
+                <span id="emailError" class="text-danger"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Доставка -->
+        <div class="accordion-item">
+
+            <h2 class="accordion-header">
+                <button type="button"
+                        class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#step2">
+                    Дані про доставку
+                </button>
+            </h2>
+
+            <div id="step2"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#checkoutAccordion">
+
+                <div class="accordion-body">
+
+                    <input asp-for="city"
+                           class="form-control"
+                           placeholder="Місто" />
+
+                    <input asp-for="street"
+                           class="form-control mt-3"
+                           placeholder="Вулиця" />
+
+                    <input asp-for="house"
+                           class="form-control mt-3"
+                           placeholder="Будинок" />
+
+                    <input asp-for="entrance"
+                           class="form-control mt-3"
+                           placeholder="Під'їзд" />
+
+                    <input asp-for="floor"
+                           class="form-control mt-3"
+                           placeholder="Поверх" />
+
+                    <input asp-for="flat"
+                           class="form-control mt-3"
+                           placeholder="Квартира" />
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Час доставки -->
+        <div class="accordion-item">
+
+            <h2 class="accordion-header">
+                <button type="button"
+                        class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#step3">
+                    Час доставки
+                </button>
+            </h2>
+
+            <div id="step3"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#checkoutAccordion">
+
+                <div class="accordion-body">
+
+                    <p id="timePreview"
+                       class="fw-bold text-success">
+                    </p>
+
+                    <input type="time"
+                           id="deliveryTime"
+                           class="form-control">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Оплата -->
+        <div class="accordion-item">
+
+            <h2 class="accordion-header">
+                <button type="button"
+                        class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#step4">
+                    Спосіб оплати
+                </button>
+            </h2>
+
+            <div id="step4"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#checkoutAccordion">
+
+                <div class="accordion-body">
+
+                    <select id="payMethod"
+                            asp-for="paymentMethod"
+                            class="form-control">
+
+                        <option value="cash">Готівка</option>
+                        <option value="card">Карткою кур'єру</option>
+                        <option value="online">Онлайн</option>
+
+                    </select>
+
+                    <div id="cashBlock" class="mt-3">
+
+                        <input asp-for="cashChange"
+                               class="form-control"
+                               placeholder="Решта з суми" />
+
+                    </div>
+                    <div id="cardBlock" class="mt-3" style="display:none;">
+
+                        <input id="cardNumber"
+                               class="form-control"
+                               placeholder="Номер картки">
+
+                        <input id="cardDate"
+                               class="form-control mt-2"
+                               placeholder="MM/YY">
+
+                        <input id="cardCVV"
+                               class="form-control mt-2"
+                               placeholder="CVV">
+
+                     </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Коментар -->
+        <div class="accordion-item">
+
+            <h2 class="accordion-header">
+                <button type="button"
+                        class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#step5">
+                    Коментар
+                </button>
+            </h2>
+
+            <div id="step5"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#checkoutAccordion">
+
+                <div class="accordion-body">
+
+                    <textarea asp-for="comment"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Ваш коментар до замовлення"></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Передзвонити -->
+
+    <div class="call-box">
+
+        <label class="switch">
+
+            <input asp-for="callMe" type="checkbox">
+
+            <span class="slider"></span>
+
+        </label>
+
+        <span>
+            Передзвонити мені для підтвердження замовлення
+        </span>
+
+    </div>
+
+    <hr />
+
+    <div class="total-box">
+
+        <h3>
+            До оплати:
+            <strong>@total.ToString("c")</strong>
+        </h3>
+
+    </div>
+
+<button type="submit"
+        id="submitBtn"
+        class="btn btn-success checkout-btn mt-3">
+    Оформити замовлення
+</button>
+
+</form>
+
+<script>
+
+    // ================= ТЕЛЕФОН =================
+
+    const phone = document.getElementById("phone");
+
+phone.addEventListener("input", () => {
+
+    if (!phone.value.startsWith("+380")) {
+        phone.value = "+380";
+    }
+
+    let digits = phone.value.replace(/\D/g, "");
+
+    if (digits.length > 12) {
+        digits = digits.slice(0, 12);
+    }
+
+    phone.value = "+" + digits;
+
+    validateForm(); 
+});
+
+    // ================= ОПЛАТА =================
+
+    const pay = document.getElementById("payMethod");
+    const cash = document.getElementById("cashBlock");
+    const card = document.getElementById("cardBlock");
+
+    function updatePayment() {
+
+        if (pay.value === "cash") {
+
+            cash.style.display = "block";
+            card.style.display = "none";
+        }
+
+        else if (pay.value === "card") {
+
+            cash.style.display = "none";
+            card.style.display = "none";
+        }
+
+        else if (pay.value === "online") {
+
+            cash.style.display = "none";
+            card.style.display = "block";
+        }
+    }
+
+    pay.addEventListener("change", updatePayment);
+
+    updatePayment();
+
+    // ================= ЧАС ДОСТАВКИ =================
+
+    const time = document.getElementById("deliveryTime");
+    const preview = document.getElementById("timePreview");
+
+    function setMinTime() {
+
+        let d = new Date();
+
+        d.setMinutes(d.getMinutes() + 30);
+
+        time.min = d.toTimeString().slice(0, 5);
+
+        preview.innerText =
+            "Найшвидша доставка приблизно на: " +
+            d.toTimeString().slice(0, 5);
+    }
+
+    setMinTime();
+
+    time.addEventListener("change", () => {
+
+        preview.innerText =
+            "Доставка приблизно на: " +
+            time.value;
+
+    });
+
+    // ================= КАРТКА =================
+
+    const cardNumber = document.getElementById("cardNumber");
+    const cardDate = document.getElementById("cardDate");
+    const cardCVV = document.getElementById("cardCVV");
+
+    if (cardNumber) {
+
+        cardNumber.addEventListener("input", () => {
+
+            cardNumber.value =
+                cardNumber.value.replace(/\D/g, "").slice(0, 16);
+        });
+
+        cardDate.addEventListener("input", () => {
+
+            let value = cardDate.value.replace(/\D/g, "");
+
+            if (value.length > 2) {
+                value = value.substring(0, 2) + "/" + value.substring(2, 4);
+            }
+
+            cardDate.value = value.substring(0, 5);
+        });
+
+        cardCVV.addEventListener("input", () => {
+
+            cardCVV.value =
+                cardCVV.value.replace(/\D/g, "").slice(0, 3);
+        });
+    }
+
+    // ================= LIVE VALIDATION =================
+
+    const nameInput = document.getElementById("name");
+    const surnameInput = document.getElementById("surname");
+    const emailInput = document.getElementById("email");
+
+    // ІМ'Я
+    if (nameInput) {
+
+        nameInput.addEventListener("blur", function () {
+
+            let error = document.getElementById("nameError");
+
+            if (this.value.trim() === "") {
+                error.innerText = "Введіть ім'я";
+            }
+            else if (this.value.includes(" ")) {
+                error.innerText = "Ім'я не повинно містити пробілів";
+            }
+            else {
+                error.innerText = "";
+            }
+                checkFormValid();
+        });
+    }
+
+    // ПРІЗВИЩЕ
+    if (surnameInput) {
+
+        surnameInput.addEventListener("blur", function () {
+
+            let error = document.getElementById("surnameError");
+
+            if (this.value.trim() === "") {
+                error.innerText = "Введіть прізвище";
+            }
+            else if (this.value.includes(" ")) {
+                error.innerText = "Прізвище не повинно містити пробілів";
+            }
+            else {
+                error.innerText = "";
+            }
+            checkFormValid();
+        });
+    }
+
+
+
+    PHONE
+    phone.addEventListener("blur", () => {
+
+    let error = document.getElementById("phoneError");
+    let digits = phone.value.replace(/\D/g, "");
+
+    if (digits.length !== 12) {
+        error.innerText = "Номер має містити +380 і 9 цифр";
+    } else {
+        error.innerText = "";
+    }
+    checkFormValid();
+});
+
+    // ================= БЛОКУВАННЯ ВІДПРАВКИ =================
+
+    document.querySelector("form")
+        .addEventListener("submit", function (e) {
+
+            let hasErrors = false;
+
+            if (document.getElementById("nameError")?.innerText !== "")
+                hasErrors = true;
+
+            if (document.getElementById("surnameError")?.innerText !== "")
+                hasErrors = true;
+
+            if (document.getElementById("phoneError")?.innerText !== "")
+                hasErrors = true;
+
+            if (document.getElementById("emailError")?.innerText !== "")
+                hasErrors = true;
+
+            if (hasErrors) {
+
+                alert("Будь ласка, виправте помилки у формі.");
+
+                e.preventDefault();
+            }
+
+        });
+
+        const submitBtn = document.getElementById("submitBtn");
+
+function checkFormValid() {
+
+    const submitBtn = document.getElementById("submitBtn");
+
+function validateForm() {
+
+    let errors = 0;
+
+    const nameErr = document.getElementById("nameError").innerText;
+    const surnameErr = document.getElementById("surnameError").innerText;
+    const phoneErr = document.getElementById("phoneError").innerText;
+    const emailErr = document.getElementById("emailError").innerText;
+
+    if (nameErr) errors++;
+    if (surnameErr) errors++;
+    if (phoneErr) errors++;
+    if (emailErr) errors++;
+
+    if (errors > 0) {
+
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.5";
+        submitBtn.style.cursor = "not-allowed";
+
+    } else {
+
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.style.cursor = "pointer";
+    }
+}
+nameInput.addEventListener("input", validateForm);
+surnameInput.addEventListener("input", validateForm);
+emailInput.addEventListener("input", validateForm);
+phone.addEventListener("input", validateForm);
+}
+document.querySelector("form").addEventListener("submit", function (e) {
+
+    let hasErrors = false;
+
+    if (document.getElementById("nameError")?.innerText !== "")
+        hasErrors = true;
+
+    if (document.getElementById("surnameError")?.innerText !== "")
+        hasErrors = true;
+
+    if (document.getElementById("phoneError")?.innerText !== "")
+        hasErrors = true;
+
+    if (document.getElementById("emailError")?.innerText !== "")
+        hasErrors = true;
+
+    if (hasErrors) {
+        alert("Будь ласка, виправте помилки у формі.");
+        e.preventDefault();
+        return;
+    }
+
+    // ⬇️ якщо все ок — показуємо успіх
+    alert("🎉 Замовлення успішно оформлено! Дякуємо за покупку ❤️");
+});</script>

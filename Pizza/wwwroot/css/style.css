@@ -1,33 +1,141 @@
-﻿body {
-    background: #fcfcfc;
-}
-.cart-item img {
-    width: 120px !important;
-    height: 120px !important;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.cart-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-    flex-shrink: 0;
+﻿.accordion-item {
+    border: none !important;
+    margin-bottom: 15px;
+    border-radius: 25px !important;
+    overflow: hidden;
+    background: #f4f4f4;
+    box-shadow: none;
 }
 
-.cart-info {
-    flex: 1;
+.accordion-button {
+    background: #f4f4f4 !important;
+    color: #222 !important;
+    font-size: 28px;
+    font-weight: 700;
+    padding: 22px 30px;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
-@media (max-width: 768px) {
-    .cart-item {
-        flex-direction: column;
-        text-align: center;
+    .accordion-button:not(.collapsed) {
+        background: #f4f4f4 !important;
+        color: #222 !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
 
-    .cart-img {
-        width: 180px;
-        height: 180px;
+    .accordion-button:focus {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+.accordion-body {
+    background: white;
+    padding: 25px;
+}
+
+.accordion-button::after {
+    width: 22px;
+    height: 22px;
+}
+
+/* ПОЛЯ */
+
+.form-control {
+    border-radius: 15px;
+    min-height: 50px;
+    border: 1px solid #ddd;
+}
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: none;
+    }
+
+/* КНОПКА ОФОРМЛЕННЯ */
+
+.checkout-btn {
+    width: 100%;
+    height: 55px;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* БЛОК ДО ОПЛАТИ */
+
+.total-box {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #eee;
+}
+
+/* ПЕРЕДЗВОНИТИ */
+
+.call-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    font-size: 22px;
+    color: #777;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 58px;
+    height: 32px;
+}
+
+    .switch input {
+        display: none;
+    }
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+    .slider:before {
+        content: "";
+        position: absolute;
+        width: 26px;
+        height: 26px;
+        left: 3px;
+        top: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: .3s;
+    }
+
+.switch input:checked + .slider {
+    background: #68b7c9;
+}
+
+    .switch input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+/* МОБІЛЬНА ВЕРСІЯ */
+
+@media(max-width:768px) {
+
+    .accordion-button {
+        font-size: 22px;
+        padding: 18px;
+    }
+
+    .call-box {
+        font-size: 18px;
     }
 }
