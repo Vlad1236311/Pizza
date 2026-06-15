@@ -1,12 +1,91 @@
-﻿@model PizzaCartViewModel
-<div class="containr">
-    @foreach (var el in Model.pizzaCart.listPizzaItems) 
+﻿@model Pizza.ViewModels.PizzaCartViewModel
+
+<div class="container">
+
+@{
+    var totalPrice = Model.pizzaCart.listPizzaItems.Sum(item => item.food.price);
+
+    var deliveryPrice = totalPrice >= 700 ? 0 : 35;
+
+    var freeDeliveryFrom = 700;
+
+    var remainingForFreeDelivery = freeDeliveryFrom - totalPrice;
+
+    if (remainingForFreeDelivery < 0)
     {
-        <div class="alert alert-warning mt3">
-            <b>Піца:</b> @el.food.name <br />
-            <b>Ціна:</b> @el.food.price.ToString("c")
-            </div>
+        remainingForFreeDelivery = 0;
     }
-    <hr />
-   <a class="btn btn-danger" asp-controller="Order" asp-action="Checkout">Оплатити замовлення</a> 
-    </div>   
+
+    var finalPrice = totalPrice + deliveryPrice;
+}
+
+@foreach (var el in Model.pizzaCart.listPizzaItems)
+{
+    <div class="alert alert-warning mt-3">
+
+        <div style="display:flex; align-items:center; gap:15px;">
+
+            <img src="@el.food.img"
+                 alt="@el.food.name"
+                 style="width:120px; height:120px; object-fit:cover; border-radius:10px;" />
+
+            <div>
+                <b>Піца:</b> @el.food.name <br />
+                <b>Ціна:</b> @el.food.price.ToString("c")
+
+                <br /><br />
+
+                <a class="btn btn-danger btn-sm"
+                   asp-controller="PizzaCart"
+                   asp-action="RemoveFromCart"
+                   asp-route-id="@el.food.id">
+                    Видалити
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+<hr />
+
+<!-- DELIVERY INFO -->
+<div style="margin-bottom:10px;">
+    <h5>
+        Доставка:
+        <b>
+            @(deliveryPrice == 0 ? "Безкоштовно" : deliveryPrice.ToString("c"))
+        </b>
+    </h5>
+
+    @if (deliveryPrice > 0)
+    {
+        <small style="color:gray;">
+            Додайте ще @remainingForFreeDelivery.ToString("c") для безкоштовної доставки
+        </small>
+    }
+    else
+    {
+        <small style="color:green;">
+            Ви отримали безкоштовну доставку (͠≖ ͜ʖ͠≖)👌
+        </small>
+    }
+</div>
+
+<!-- TOTAL -->
+<div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+
+    <h4>
+        Загальна сума: <b>@finalPrice.ToString("c")</b>
+    </h4>
+
+    <a class="btn btn-danger"
+       asp-controller="Order"
+       asp-action="Checkout">
+        Оплатити замовлення
+    </a>
+
+</div>
+
+</div>

@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pizza.Data.Models
 {
@@ -25,16 +24,21 @@ namespace Pizza.Data.Models
         {
             ISession session = service.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
             var context = service.GetService<AppDBcontent>();
+
             string pizzaCartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
 
             session.SetString("CartId", pizzaCartId);
 
-            return new PizzaCart(context) { PizzaCartId = pizzaCartId };
+            return new PizzaCart(context)
+            {
+                PizzaCartId = pizzaCartId
+            };
         }
 
-        public void AddToCart(Food food) 
+        public void AddToCart(Food food)
         {
-            appDBcontent.PizzaCartItem.Add(new PizzaCartItem{
+            appDBcontent.PizzaCartItem.Add(new PizzaCartItem
+            {
                 PizzaCartId = PizzaCartId,
                 food = food,
                 price = food.price
@@ -43,10 +47,25 @@ namespace Pizza.Data.Models
             appDBcontent.SaveChanges();
         }
 
-        public List<PizzaCartItem> getPizzaItems() 
+        public void RemoveFromCart(int foodId)
         {
-            return appDBcontent.PizzaCartItem.Where(c => c.PizzaCartId == PizzaCartId).Include(s => s.food).ToList();
-        } 
+            var item = appDBcontent.PizzaCartItem.FirstOrDefault(
+                p => p.PizzaCartId == PizzaCartId &&
+                     p.food.id == foodId);
 
+            if (item != null)
+            {
+                appDBcontent.PizzaCartItem.Remove(item);
+                appDBcontent.SaveChanges();
+            }
+        }
+
+        public List<PizzaCartItem> getPizzaItems()
+        {
+            return appDBcontent.PizzaCartItem
+                .Where(c => c.PizzaCartId == PizzaCartId)
+                .Include(s => s.food)
+                .ToList();
+        }
     }
 }

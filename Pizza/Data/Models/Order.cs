@@ -43,5 +43,39 @@ namespace Pizza.Data.Models
         public DateTime orderTime { get; set; }
         public List<OrderDetail> orderDetails { get; set; }
 
+        [Display(Name = "Місто")]
+        [StringLength(20)]
+        public string city { get; set; }
+
+        [Display(Name = "Вулиця")]
+        [StringLength(30)]
+        public string street { get; set; }
+
+        [Display(Name = "Будинок")]
+        [StringLength(10)]
+        public string house { get; set; }
+
+        [Display(Name = "Під'їзд")]
+        [StringLength(10)]
+        public string entrance { get; set; }
+
+        [Display(Name = "Поверх")]
+        [StringLength(10)]
+        public string floor { get; set; }
+
+        [Display(Name = "Квартира")]
+        [StringLength(10)]
+        public string flat { get; set; }
+
+        public string deliveryTime { get; set; }
+
+        public string paymentMethod { get; set; }
+
+        public string comment { get; set; }
+
+        public bool callMe { get; set; }
+
+        public decimal cashChange { get; set; }
+
     }
 }

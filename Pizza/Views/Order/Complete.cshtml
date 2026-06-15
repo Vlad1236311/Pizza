@@ -1,1 +1,8 @@
-﻿<h3>@ViewBag.Message</h3>
+﻿@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["Message"]
+    </div>
+}
+
+<h2>Дякуємо!</h2>
