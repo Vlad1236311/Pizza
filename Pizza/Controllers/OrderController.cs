@@ -51,7 +51,7 @@ namespace Pizza.Controllers
 
         public IActionResult Complete()
         {
-            TempData["Message"] = "🎉 Замовлення успішно оформлено!";
+            TempData["Message"] = " Замовлення успішно оформлено!";
             return RedirectToAction("Complete");
         }
     }
