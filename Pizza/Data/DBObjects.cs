@@ -336,7 +336,7 @@ namespace Pizza.Data
                     },
                     new Food
                     {
-                        name = "Galicia.jpg",
+                        name = "Galicia",
                         shortDesc = "1 л",
                         longDesc = "мультифруктовий",
                         img = "/img/Galicia.jpg",

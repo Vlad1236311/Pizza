@@ -29,30 +29,42 @@ namespace Pizza.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-            shopCart.listPizzaItems = shopCart.getPizzaItems();
+            var items = shopCart.getPizzaItems();
+            shopCart.listPizzaItems = items;
 
-            ViewBag.CartTotal = shopCart.listPizzaItems.Sum(i => i.price);
+            ViewBag.CartTotal = items.Sum(i => i.price);
 
-            if (shopCart.listPizzaItems.Count == 0)
+            if (items == null || !items.Any())
             {
-                ModelState.AddModelError("", "Кошик порожній!");
+                TempData["Error"] = "Кошик порожній!";
+                return RedirectToAction("Checkout");
             }
 
-            if (ModelState.IsValid)
+            try
             {
                 order.orderTime = DateTime.Now;
+
                 allOrders.createOrder(order);
+
+                foreach (var item in items.ToList())
+                {
+                    shopCart.RemoveFromCart(item.food.id);
+                }
+
+                TempData["Success"] = "🎉 Замовлення успішно оформлено!";
                 return RedirectToAction("Complete");
             }
-
-            return View(order);
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Complete");
+            }
         }
 
 
         public IActionResult Complete()
         {
-            TempData["Message"] = " Замовлення успішно оформлено!";
-            return RedirectToAction("Complete");
+            return View();
         }
     }
 }

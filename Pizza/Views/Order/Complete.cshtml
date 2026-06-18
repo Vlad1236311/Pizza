@@ -1,8 +1,23 @@
-﻿@if (TempData["Message"] != null)
+﻿<div class="container mt-5">
+
+@if (TempData["Success"] != null)
 {
-    <div class="alert alert-success mt-3">
-        @TempData["Message"]
+    <div class="alert alert-success">
+        @TempData["Success"]
     </div>
 }
 
-<h2>Дякуємо!</h2>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+    <h3>Дякуємо за замовлення 🍕</h3>
+
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
+        На головну
+    </a>
+
+</div>

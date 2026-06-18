@@ -37,6 +37,44 @@ namespace Pizza.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Pizza.Data.Models.Contact", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("longitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Contacts");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            address = "Kyiv, Ukraine",
+                            email = "prijmakvlad7@gmail.com",
+                            latitude = 50.450099999999999,
+                            longitude = 30.523399999999999,
+                            phone = "+380933613299"
+                        });
+                });
+
             modelBuilder.Entity("Pizza.Data.Models.Food", b =>
                 {
                     b.Property<int>("id")
@@ -81,11 +119,6 @@ namespace Pizza.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
 
                     b.Property<bool>("callMe")
                         .HasColumnType("bit");
