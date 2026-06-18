@@ -192,7 +192,10 @@ namespace Pizza.Migrations
                     b.Property<int?>("foodid")
                         .HasColumnType("int");
 
-                    b.Property<int>("price")
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("quantity")
                         .HasColumnType("int");
 
                     b.HasKey("id");

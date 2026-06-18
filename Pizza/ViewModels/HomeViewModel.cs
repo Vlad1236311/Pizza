@@ -9,6 +9,6 @@ namespace Pizza.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<Food> favFoods { get; set; }
+        public IEnumerable<Food> Foods { get; set; }
     }
 }

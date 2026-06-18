@@ -10,7 +10,7 @@ using Pizza.Data;
 namespace Pizza.Migrations
 {
     [DbContext(typeof(AppDBcontent))]
-    [Migration("20260618122048_Initial")]
+    [Migration("20260618142628_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,7 +194,10 @@ namespace Pizza.Migrations
                     b.Property<int?>("foodid")
                         .HasColumnType("int");
 
-                    b.Property<int>("price")
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("quantity")
                         .HasColumnType("int");
 
                     b.HasKey("id");

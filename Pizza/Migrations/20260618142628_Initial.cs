@@ -110,8 +110,9 @@ namespace Pizza.Migrations
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     foodid = table.Column<int>(nullable: true),
-                    price = table.Column<int>(nullable: false),
-                    PizzaCartId = table.Column<string>(nullable: true)
+                    PizzaCartId = table.Column<string>(nullable: true),
+                    quantity = table.Column<int>(nullable: false),
+                    price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

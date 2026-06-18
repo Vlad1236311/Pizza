@@ -1,11 +1,99 @@
 ﻿@model HomeViewModel
 
-<h1>Їжа</h1>
-<div class="row mt-5 mb-2">
-	@{
-		foreach (Food food in Model.favFoods)
-		{
-		@Html.Partial("AllFood", food)	
-		}
-	}
-	</div>
+<div class="container">
+    <h2 class="mb-4">Всі страви</h2>
+    <form method="get" class="mb-4">
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <label>Категорія</label>
+            <select class="form-control" name="category">
+                <option value="">Всі товари</option>
+                <option value="Піца">Піца</option>
+                <option value="Напої">Напої</option>
+                <option value="Комбо">Комбо</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label>Ціна від</label>
+            <input type="number"
+                   class="form-control"
+                   name="minPrice">
+        </div>
+
+        <div class="col-md-2">
+            <label>Ціна до</label>
+            <input type="number"
+                   class="form-control"
+                   name="maxPrice">
+        </div>
+
+        <div class="col-md-3">
+            <label>Сортування</label>
+            <select class="form-control" name="sortOrder">
+
+                <option value="">Без сортування</option>
+
+                <option value="asc">
+                    За зростанням ціни
+                </option>
+
+                <option value="desc">
+                    За спаданням ціни
+                </option>
+
+            </select>
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-primary w-100">
+                Застосувати
+            </button>
+        </div>
+
+    </div>
+
+</form>
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+    <div class="row">
+
+        @foreach (var item in Model.Foods)
+        {
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100">
+                    
+                    <img src="@item.img" class="card-img-top" style="height:200px; object-fit:cover;" />
+
+                    <div class="card-body">
+                        <h5>@item.name</h5>
+
+                        <p>@item.shortDesc</p>
+
+                        <b>@item.price грн</b>
+
+                        <br /><br />
+
+                        <a class="btn btn-warning"
+                           asp-controller="PizzaCart"
+                           asp-action="AddToCart"
+                           asp-route-id="@item.id">
+                            Додати в кошик
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
