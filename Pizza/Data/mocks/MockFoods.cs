@@ -77,7 +77,7 @@ namespace Pizza.Data.mocks
 
                     new Food
                     {
-                        name = "Піца з грушею і блакитним сиром",
+                        name = "Піца з грушею ",
                         shortDesc = "Солодко-солоний делікатес",
                         longDesc = "Піца з соковитою грушею, блакитним сиром та медовими нотками для вишуканого гастрономічного досвіду.",
                         img = "/img/pieces.jpg",
@@ -242,6 +242,17 @@ namespace Pizza.Data.mocks
                         available = true,
                         Category = _categoryFood.AllCategories.First()
                     },
+                                        new Food
+                    {
+                        name = "Fanta1",
+                        shortDesc = "0.500 мл",
+                        longDesc = "апельсин",
+                        img = "/img/Fanta.jpg",
+                        price = 57,
+                        isFavourite = false,
+                        available = true,
+                        Category = _categoryFood.AllCategories.First()
+                    }
 
 
                 };

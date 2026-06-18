@@ -31,16 +31,17 @@ namespace Pizza.Controllers
             return View(obj);
         }
 
-        public RedirectToActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id)
         {
             var item = _foodRep.Foods.FirstOrDefault(i => i.id == id);
 
             if (item != null)
             {
                 _pizzaCart.AddToCart(item);
+                TempData["Message"] = "🍕 Товар додано в кошик";
             }
 
-            return RedirectToAction("Index");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         public RedirectToActionResult RemoveFromCart(int id)

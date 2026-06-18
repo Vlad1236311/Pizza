@@ -1,0 +1,166 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace Pizza.Migrations
+{
+    public partial class Initial : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    categoryName = table.Column<string>(nullable: true),
+                    desc = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(maxLength: 10, nullable: false),
+                    surname = table.Column<string>(maxLength: 15, nullable: false),
+                    address = table.Column<string>(maxLength: 20, nullable: false),
+                    phone = table.Column<string>(maxLength: 15, nullable: false),
+                    email = table.Column<string>(maxLength: 30, nullable: false),
+                    orderTime = table.Column<DateTime>(nullable: false),
+                    city = table.Column<string>(maxLength: 20, nullable: true),
+                    street = table.Column<string>(maxLength: 30, nullable: true),
+                    house = table.Column<string>(maxLength: 10, nullable: true),
+                    entrance = table.Column<string>(maxLength: 10, nullable: true),
+                    floor = table.Column<string>(maxLength: 10, nullable: true),
+                    flat = table.Column<string>(maxLength: 10, nullable: true),
+                    deliveryTime = table.Column<string>(nullable: true),
+                    paymentMethod = table.Column<string>(nullable: true),
+                    comment = table.Column<string>(nullable: true),
+                    callMe = table.Column<bool>(nullable: false),
+                    cashChange = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Food",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true),
+                    shortDesc = table.Column<string>(nullable: true),
+                    longDesc = table.Column<string>(nullable: true),
+                    img = table.Column<string>(nullable: true),
+                    price = table.Column<int>(nullable: false),
+                    isFavourite = table.Column<bool>(nullable: false),
+                    available = table.Column<bool>(nullable: false),
+                    categoryID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Food", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Food_Category_categoryID",
+                        column: x => x.categoryID,
+                        principalTable: "Category",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDetail",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    orderID = table.Column<int>(nullable: false),
+                    pizzaID = table.Column<int>(nullable: false),
+                    price = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetail", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_Order_orderID",
+                        column: x => x.orderID,
+                        principalTable: "Order",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_Food_pizzaID",
+                        column: x => x.pizzaID,
+                        principalTable: "Food",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PizzaCartItem",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    foodid = table.Column<int>(nullable: true),
+                    price = table.Column<int>(nullable: false),
+                    PizzaCartId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PizzaCartItem", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_PizzaCartItem_Food_foodid",
+                        column: x => x.foodid,
+                        principalTable: "Food",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Food_categoryID",
+                table: "Food",
+                column: "categoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetail_orderID",
+                table: "OrderDetail",
+                column: "orderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetail_pizzaID",
+                table: "OrderDetail",
+                column: "pizzaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PizzaCartItem_foodid",
+                table: "PizzaCartItem",
+                column: "foodid");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "OrderDetail");
+
+            migrationBuilder.DropTable(
+                name: "PizzaCartItem");
+
+            migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "Food");
+
+            migrationBuilder.DropTable(
+                name: "Category");
+        }
+    }
+}
