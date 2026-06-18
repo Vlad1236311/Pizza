@@ -1,4 +1,10 @@
 ﻿
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
 <h1>Їжа</h1>
 <h3>@Model.currCategory</h3>
 <div class="row mt-5 mb-2">

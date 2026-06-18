@@ -13,7 +13,8 @@ namespace Pizza.Data.mocks
             get { 
                 return new List<Category> {
                     new Category {categoryName = "Піца", desc = "Всі види піци"},
-                    new Category {categoryName = "Напої", desc = "Всі види напоїв"}
+                    new Category {categoryName = "Напої", desc = "Всі види напоїв"},
+                    new Category {categoryName = "Комбо", desc = "Набори та комбо меню" }
                 };
             }
         }

@@ -44,6 +44,11 @@ namespace Pizza.Controllers
                     foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Напої")).OrderBy(i => i.id);
                     currCategory = "Напої";
                 }
+                else if (string.Equals("Combo", category, StringComparison.OrdinalIgnoreCase))
+                {
+                    foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Комбо")).OrderBy(i => i.id);
+                    currCategory = "Комбо";
+                }
             }
 
 			var foodObj = new FoodsListViewModels

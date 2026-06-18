@@ -89,7 +89,7 @@ namespace Pizza.Data
 
                     new Food
                     {
-                        name = "Піца з грушею і блакитним сиром",
+                        name = "Піца з грушею",
                         shortDesc = "Солодко-солоний делікатес",
                         longDesc = "Піца з соковитою грушею, блакитним сиром та медовими нотками для вишуканого гастрономічного досвіду.",
                         img = "/img/pieces.jpg",
@@ -147,7 +147,7 @@ namespace Pizza.Data
                     },
                     new Food
                     {
-                        name = "Піца Лосось Філадельфія",
+                        name = "Піца Філадельфія",
                         shortDesc = "Ніжний лосось та крем-сир",
                         longDesc = "Піца з копченим лососем, крем-сиром Філадельфія, моцарелою та легким соусом, що створює ніжний і вишуканий смак.",
                         img = "/img/salmon.jpg",
@@ -156,6 +156,95 @@ namespace Pizza.Data
                         available = true,
                         Category = Categories["Піца"]
                     },
+                    new Food
+                    {
+                        name = "Піца Салямі",
+                        shortDesc = "Пікантна салямі, томатний соус і тягучий сир",
+                        longDesc = "",
+                        img = "/img/pizza-salami.jpg",
+                        price = 325,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Чікен кебаб",
+                        shortDesc = "Соковите куряче м’ясо, соус і овочі з легкою димною ноткою",
+                        longDesc = "",
+                        img = "/img/chickenkebab.jpg",
+                        price = 285,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Кантрі",
+                        shortDesc = "Бекон, картопля, цибуля та вершковий соус у домашньому стилі",
+                        longDesc = "",
+                        img = "/img/kantry.jpg",
+                        price = 285,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Мангеттен",
+                        shortDesc = "Шинка, гриби, сир і ніжний томатний соус",
+                        longDesc = "",
+                        img = "/img/manhatten-slice.jpg",
+                        price = 285,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Пепероні з томатами",
+                        shortDesc = "Гостра пепероні, свіжі томати та моцарела",
+                        longDesc = "",
+                        img = "/img/pepperony-y-tomaty.jpg",
+                        price = 285,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Техас             ",
+                        shortDesc = "М’ясне асорті, барбекю соус і пікантний сирний мікс",
+                        longDesc = "",
+                        img = "/img/tekhas-300dpi.jpg",
+                        price = 285,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Гриль Мікс",
+                        shortDesc = "Поєднання запеченого м’яса на грилі та овочів",
+                        longDesc = "",
+                        img = "/img/grill-slice.jpg",
+                        price = 322,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+                    new Food
+                    {
+                        name = "Піца Грецька",
+                        shortDesc = "Тунець, оливки, фета та свіжі овочі",
+                        longDesc = "",
+                        img = "/img/grecka.jpg",
+                        price = 285,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Піца"]
+                    },
+
                     new Food
                     {
                         name = "Coca Cola",
@@ -255,6 +344,28 @@ namespace Pizza.Data
                         isFavourite = false,
                         available = true,
                         Category = Categories["Напої"]
+                    },
+                    new Food
+                    {
+                        name = "Cтандартна Салямі",
+                        shortDesc = "Салямі стандарт тісто пухке + Coca-Cola 0.33 х2",
+                        longDesc = "",
+                        img = "/img/combo-standardsalami.jpg",
+                        price = 359,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Комбо"]
+                    },
+                    new Food
+                    {
+                        name = "Cтандартна Гавайська",
+                        shortDesc = "Гавайська Велика тісто пухке + CocaCola 1.25",
+                        longDesc = "",
+                        img = "/img/combo-large-hawaiian.jpg",
+                        price = 425,
+                        isFavourite = false,
+                        available = true,
+                        Category = Categories["Комбо"]
                     }
                 );
             }
@@ -272,6 +383,7 @@ namespace Pizza.Data
                     var list = new Category[] {
                         new Category {categoryName = "Піца", desc = "Всі види піци"},
                         new Category {categoryName = "Напої", desc = "Всі види напоїв"},
+                        new Category {categoryName ="Комбо", desc = "Набори та комбо меню" },
                     };
 
                     category = new Dictionary<string, Category>();
