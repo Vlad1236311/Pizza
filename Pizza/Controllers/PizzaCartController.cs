@@ -49,5 +49,21 @@ namespace Pizza.Controllers
             _pizzaCart.RemoveFromCart(id);
             return RedirectToAction("Index");
         }
+        public IActionResult Increase(int id)
+        {
+            var item = _foodRep.Foods.FirstOrDefault(i => i.id == id);
+
+            if (item != null)
+            {
+                _pizzaCart.AddToCart(item);
+            }
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult Decrease(int id)
+        {
+            _pizzaCart.RemoveFromCart(id);
+            return RedirectToAction("Index");
+        }
     }
 }

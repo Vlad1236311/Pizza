@@ -37,25 +37,42 @@ namespace Pizza.Data.Models
 
         public void AddToCart(Food food)
         {
-            appDBcontent.PizzaCartItem.Add(new PizzaCartItem
+            var cartItem = appDBcontent.PizzaCartItem
+                .FirstOrDefault(p => p.PizzaCartId == PizzaCartId && p.food.id == food.id);
+
+            if (cartItem != null)
             {
-                PizzaCartId = PizzaCartId,
-                food = food,
-                price = food.price
-            });
+                cartItem.quantity++;
+            }
+            else
+            {
+                appDBcontent.PizzaCartItem.Add(new PizzaCartItem
+                {
+                    PizzaCartId = PizzaCartId,
+                    food = food,
+                    price = food.price,
+                    quantity = 1
+                });
+            }
 
             appDBcontent.SaveChanges();
         }
 
         public void RemoveFromCart(int foodId)
         {
-            var item = appDBcontent.PizzaCartItem.FirstOrDefault(
-                p => p.PizzaCartId == PizzaCartId &&
-                     p.food.id == foodId);
+            var item = appDBcontent.PizzaCartItem
+                .FirstOrDefault(p => p.PizzaCartId == PizzaCartId &&
+                                     p.food.id == foodId);
 
             if (item != null)
             {
-                appDBcontent.PizzaCartItem.Remove(item);
+                item.quantity--;
+
+                if (item.quantity <= 0)
+                {
+                    appDBcontent.PizzaCartItem.Remove(item);
+                }
+
                 appDBcontent.SaveChanges();
             }
         }

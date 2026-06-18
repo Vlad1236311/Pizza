@@ -3,7 +3,7 @@
 <div class="container">
 
 @{
-    var totalPrice = Model.pizzaCart.listPizzaItems.Sum(item => item.food.price);
+    var totalPrice = Model.pizzaCart.listPizzaItems.Sum(item => item.food.price * item.quantity);
 
     var deliveryPrice = totalPrice >= 700 ? 0 : 35;
 
@@ -30,18 +30,33 @@
                  style="width:120px; height:120px; object-fit:cover; border-radius:10px;" />
 
             <div>
-                <b>Піца:</b> @el.food.name <br />
-                <b>Ціна:</b> @el.food.price.ToString("c")
+    <b>Піца:</b> @el.food.name <br />
+    <b>Ціна:</b> @(el.food.price * el.quantity) грн
 
-                <br /><br />
+    <br /><br />
 
-                <a class="btn btn-danger btn-sm"
-                   asp-controller="PizzaCart"
-                   asp-action="RemoveFromCart"
-                   asp-route-id="@el.food.id">
-                    Видалити
-                </a>
-            </div>
+    
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+
+        <a class="btn btn-success btn-sm"
+           asp-action="Increase"
+           asp-route-id="@el.food.id">+</a>
+
+        <span><b>@el.quantity</b></span>
+
+        <a class="btn btn-warning btn-sm"
+           asp-action="Decrease"
+           asp-route-id="@el.food.id">-</a>
+
+    </div>
+
+    <a class="btn btn-danger btn-sm"
+       asp-controller="PizzaCart"
+       asp-action="RemoveFromCart"
+       asp-route-id="@el.food.id">
+        Видалити
+    </a>
+</div>
 
         </div>
 
@@ -50,7 +65,7 @@
 
 <hr />
 
-<!-- DELIVERY INFO -->
+
 <div style="margin-bottom:10px;">
     <h5>
         Доставка:

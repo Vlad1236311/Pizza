@@ -1,11 +1,39 @@
 ﻿@model HomeViewModel
 
-<h1>Їжа</h1>
-<div class="row mt-5 mb-2">
-	@{
-		foreach (Food food in Model.favFoods)
-		{
-		@Html.Partial("AllFood", food)	
-		}
-	}
-	</div>
+<div class="container">
+    <h2 class="mb-4">Всі страви</h2>
+
+    <div class="row">
+
+        @foreach (var item in Model.Foods)
+        {
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100">
+                    
+                    <img src="@item.img" class="card-img-top" style="height:200px; object-fit:cover;" />
+
+                    <div class="card-body">
+                        <h5>@item.name</h5>
+
+                        <p>@item.shortDesc</p>
+
+                        <b>@item.price грн</b>
+
+                        <br /><br />
+
+                        <a class="btn btn-warning"
+                           asp-controller="PizzaCart"
+                           asp-action="AddToCart"
+                           asp-route-id="@item.id">
+                            Додати в кошик
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>

@@ -11,9 +11,13 @@ namespace Pizza.Data.Models
     public class PizzaCartItem
     {
         public int id { get; set; }
+
         public Food food { get; set; }
-        public int price { get; set; }
-        
+
         public string PizzaCartId { get; set; }
+
+        public int quantity { get; set; } = 1;
+
+        public double price { get; set; }
     }
 }

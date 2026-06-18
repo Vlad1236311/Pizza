@@ -10,19 +10,21 @@ namespace Pizza.Controllers
 {
     public class HomeController : Controller
     {
-        private IAllFood _foodRep;
+        private readonly IAllFood _foodRep;
 
         public HomeController(IAllFood foodRep)
         {
             _foodRep = foodRep;
         }
 
-        public ViewResult Index()
+        public IActionResult Index()
         {
-            var homeFoods = new HomeViewModel {
-            favFoods = _foodRep.getFavFoods
+            var model = new HomeViewModel
+            {
+                Foods = _foodRep.Foods.ToList()
             };
-            return View(homeFoods);
+
+            return View(model);
         }
     }
 }
