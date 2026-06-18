@@ -29,7 +29,17 @@ namespace Pizza.Data
                     address = "Kyiv, Ukraine",
                     latitude = 50.4501,
                     longitude = 30.5234
+                },
+                new Contact
+                {
+                    id = 2,
+                    phone = "+380970494450",
+                    email = "andreyzet08a@icloud.com",
+                    latitude = 50.4501,
+                    longitude = 30.5234
                 }
+
+
             );
         }
     }
