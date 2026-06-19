@@ -10,7 +10,7 @@ using Pizza.Data;
 namespace Pizza.Migrations
 {
     [DbContext(typeof(AppDBcontent))]
-    [Migration("20260619063755_Initial")]
+    [Migration("20260619070844_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,32 @@ namespace Pizza.Migrations
                 .HasAnnotation("ProductVersion", "3.1.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Pizza.Data.Models.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Login = "admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAECB9Qxcbkfc5xwVi8mn0HtLcgv3PtGSVM6yulf68RxjQUb47FI+LB0cd+0KfdR4yRQ=="
+                        });
+                });
 
             modelBuilder.Entity("Pizza.Data.Models.Category", b =>
                 {
@@ -78,6 +104,7 @@ namespace Pizza.Migrations
                         new
                         {
                             id = 2,
+                            address = "Kyiv, Ukraine",
                             email = "andreyzet08a@icloud.com",
                             latitude = 50.450099999999999,
                             longitude = 30.523399999999999,

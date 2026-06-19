@@ -1,5 +1,6 @@
-﻿using Pizza.Data.Models;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Pizza.Data.Models;
 
 namespace Pizza.Data
 {
@@ -15,6 +16,8 @@ namespace Pizza.Data
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,12 +38,23 @@ namespace Pizza.Data
                     id = 2,
                     phone = "+380970494450",
                     email = "andreyzet08a@icloud.com",
+                    address = "Kyiv, Ukraine",
                     latitude = 50.4501,
                     longitude = 30.5234
                 }
-
-
             );
+
+            var hasher = new PasswordHasher<Admin>();
+
+            var admin = new Admin
+            {
+                Id = 1,
+                Login = "admin"
+            };
+
+            admin.PasswordHash = hasher.HashPassword(admin, "admin12345");
+
+            modelBuilder.Entity<Admin>().HasData(admin);
         }
     }
 }
