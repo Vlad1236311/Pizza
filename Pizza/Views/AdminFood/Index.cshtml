@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Food>
+
+<h2>Товари</h2>
+
+<table class="table">
+
+<tr>
+    <th>Назва</th>
+    <th>Ціна</th>
+    <th>Статус</th>
+    <th>Дії</th>
+</tr>
+
+@foreach (var item in Model)
+{
+<tr>
+
+    <td>@item.name</td>
+
+    <td>@item.price грн</td>
+
+    <td>
+        @(item.available ? "Відображається" : "Прихований")
+    </td>
+
+    <td>
+
+        <a class="btn btn-primary"
+           asp-action="Edit"
+           asp-route-id="@item.id">
+            Редагувати
+        </a>
+
+        @if (item.available)
+        {
+            <a class="btn btn-warning"
+               asp-action="Hide"
+               asp-route-id="@item.id">
+                Приховати
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-success"
+               asp-action="Show"
+               asp-route-id="@item.id">
+                Показати
+            </a>
+        }
+
+    </td>
+
+</tr>
+}
+
+</table>

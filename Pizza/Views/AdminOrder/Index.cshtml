@@ -1,0 +1,35 @@
+﻿@model List<Pizza.Data.Models.Order>
+
+<h2>Замовлення</h2>
+
+@foreach (var order in Model)
+{
+    <div class="card mb-3 p-3">
+
+        <h5>Замовлення #@order.id</h5>
+
+        <p><b>Ім'я:</b> @order.name @order.surname</p>
+        <p><b>Телефон:</b> @order.phone</p>
+        <p><b>Email:</b> @order.email</p>
+        <p><b>Адреса:</b>@order.city @order.street @order.house @order.entrance @order.floor @order.flat</p>
+        <p><b>Час:</b> @order.orderTime</p>
+
+        <hr />
+
+        <h6>Товари:</h6>
+
+        @foreach (var item in order.orderDetails)
+        {
+            <p>
+                 @item.food.name —
+                @item.price грн
+            </p>
+        }
+
+        <h5>
+             Сума:
+            @order.orderDetails.Sum(x => x.price) грн
+        </h5>
+
+    </div>
+}

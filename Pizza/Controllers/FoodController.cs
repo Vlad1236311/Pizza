@@ -29,25 +29,24 @@ namespace Pizza.Controllers
 			string _category = category;
             IEnumerable<Food> foods = null;
 			string currCategory = "";
-			if (string.IsNullOrEmpty(category))
+            if (string.IsNullOrEmpty(category))
+            {
+                foods = _allFood.Foods
+                                .Where(i => i.available)
+                                .OrderBy(i => i.id);
+            }
+            else
 			{
-				foods = _allFood.Foods.OrderBy(i => i.id);
-			}
-			else
-			{
-				if (string.Equals("Pizza", category, StringComparison.OrdinalIgnoreCase)) { 
-				foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Піца")).OrderBy(i => i.id);
-                    currCategory = "Піца";
+				if (string.Equals("Pizza", category, StringComparison.OrdinalIgnoreCase)) {
+                    foods = _allFood.Foods.Where(i => i.available &&i.Category.categoryName.Equals("Піца")).OrderBy(i => i.id);
                 }
                 else if (string.Equals("Drink", category, StringComparison.OrdinalIgnoreCase))
                 {
-                    foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Напої")).OrderBy(i => i.id);
-                    currCategory = "Напої";
+                    foods = _allFood.Foods.Where(i => i.available &&i.Category.categoryName.Equals("Напої")).OrderBy(i => i.id);
                 }
                 else if (string.Equals("Combo", category, StringComparison.OrdinalIgnoreCase))
                 {
-                    foods = _allFood.Foods.Where(i => i.Category.categoryName.Equals("Комбо")).OrderBy(i => i.id);
-                    currCategory = "Комбо";
+                    foods = _allFood.Foods.Where(i => i.available &&i.Category.categoryName.Equals("Комбо")).OrderBy(i => i.id);
                 }
             }
 
