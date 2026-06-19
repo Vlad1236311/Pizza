@@ -22,6 +22,23 @@ namespace Pizza.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    phone = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: true),
+                    address = table.Column<string>(nullable: true),
+                    latitude = table.Column<double>(nullable: false),
+                    longitude = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
@@ -29,10 +46,8 @@ namespace Pizza.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(maxLength: 10, nullable: false),
                     surname = table.Column<string>(maxLength: 15, nullable: false),
-                    address = table.Column<string>(maxLength: 20, nullable: false),
                     phone = table.Column<string>(maxLength: 15, nullable: false),
                     email = table.Column<string>(maxLength: 30, nullable: false),
-                    orderTime = table.Column<DateTime>(nullable: false),
                     city = table.Column<string>(maxLength: 20, nullable: true),
                     street = table.Column<string>(maxLength: 30, nullable: true),
                     house = table.Column<string>(maxLength: 10, nullable: true),
@@ -43,7 +58,8 @@ namespace Pizza.Migrations
                     paymentMethod = table.Column<string>(nullable: true),
                     comment = table.Column<string>(nullable: true),
                     callMe = table.Column<bool>(nullable: false),
-                    cashChange = table.Column<decimal>(nullable: false)
+                    cashChange = table.Column<decimal>(nullable: false),
+                    orderTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,6 +141,11 @@ namespace Pizza.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Contacts",
+                columns: new[] { "id", "address", "email", "latitude", "longitude", "phone" },
+                values: new object[] { 1, "Kyiv, Ukraine", "prijmakvlad7@gmail.com", 50.450099999999999, 30.523399999999999, "+380933613299" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Food_categoryID",
                 table: "Food",
@@ -148,6 +169,9 @@ namespace Pizza.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Contacts");
+
             migrationBuilder.DropTable(
                 name: "OrderDetail");
 
