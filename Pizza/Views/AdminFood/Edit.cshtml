@@ -1,0 +1,27 @@
+﻿@model Pizza.Data.Models.Food
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="id" />
+
+    <input asp-for="name" class="form-control" />
+    <input asp-for="shortDesc" class="form-control mt-2" />
+    <input asp-for="longDesc" class="form-control mt-2" />
+    <input asp-for="price" class="form-control mt-2" />
+    <input asp-for="img" class="form-control mt-2" />
+
+    <select asp-for="categoryID"
+            class="form-control mt-2"
+            asp-items="@(new SelectList(ViewBag.Categories, "id", "categoryName"))">
+    </select>
+
+    <div class="form-check mt-2">
+        <input asp-for="available" class="form-check-input" />
+        <label>Показувати товар</label>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">
+        Зберегти
+    </button>
+
+</form>

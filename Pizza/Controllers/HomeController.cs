@@ -20,7 +20,9 @@ namespace Pizza.Controllers
         public IActionResult Index(string category, ushort? minPrice,
                           ushort? maxPrice, string sortOrder)
         {
-            var foods = _foodRep.Foods.AsQueryable();
+            var foods = _foodRep.Foods
+                    .Where(f => f.available)
+                    .AsQueryable();
 
             // 🔥 КАТЕГОРІЯ (ВАЖЛИВО: без null проблем)
             if (!string.IsNullOrEmpty(category))

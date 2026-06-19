@@ -72,6 +72,14 @@ namespace Pizza.Migrations
                             latitude = 50.450099999999999,
                             longitude = 30.523399999999999,
                             phone = "+380933613299"
+                        },
+                        new
+                        {
+                            id = 2,
+                            email = "andreyzet08a@icloud.com",
+                            latitude = 50.450099999999999,
+                            longitude = 30.523399999999999,
+                            phone = "+380970494450"
                         });
                 });
 
@@ -194,20 +202,20 @@ namespace Pizza.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("orderID")
+                    b.Property<int>("foodId")
                         .HasColumnType("int");
 
-                    b.Property<int>("pizzaID")
+                    b.Property<int>("orderId")
                         .HasColumnType("int");
 
-                    b.Property<long>("price")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("orderID");
+                    b.HasIndex("foodId");
 
-                    b.HasIndex("pizzaID");
+                    b.HasIndex("orderId");
 
                     b.ToTable("OrderDetail");
                 });
@@ -249,15 +257,15 @@ namespace Pizza.Migrations
 
             modelBuilder.Entity("Pizza.Data.Models.OrderDetail", b =>
                 {
-                    b.HasOne("Pizza.Data.Models.Order", "order")
-                        .WithMany("orderDetails")
-                        .HasForeignKey("orderID")
+                    b.HasOne("Pizza.Data.Models.Food", "food")
+                        .WithMany()
+                        .HasForeignKey("foodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Pizza.Data.Models.Food", "pizza")
-                        .WithMany()
-                        .HasForeignKey("pizzaID")
+                    b.HasOne("Pizza.Data.Models.Order", "order")
+                        .WithMany("orderDetails")
+                        .HasForeignKey("orderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

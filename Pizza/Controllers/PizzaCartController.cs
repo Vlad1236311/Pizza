@@ -33,7 +33,8 @@ namespace Pizza.Controllers
 
         public IActionResult AddToCart(int id)
         {
-            var item = _foodRep.Foods.FirstOrDefault(i => i.id == id);
+            var item = _foodRep.Foods
+                   .FirstOrDefault(i => i.id == id && i.available);
 
             if (item != null)
             {
@@ -51,7 +52,8 @@ namespace Pizza.Controllers
         }
         public IActionResult Increase(int id)
         {
-            var item = _foodRep.Foods.FirstOrDefault(i => i.id == id);
+            var item = _foodRep.Foods
+                   .FirstOrDefault(i => i.id == id && i.available);
 
             if (item != null)
             {

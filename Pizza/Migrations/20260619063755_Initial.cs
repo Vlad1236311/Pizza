@@ -98,23 +98,23 @@ namespace Pizza.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    orderID = table.Column<int>(nullable: false),
-                    pizzaID = table.Column<int>(nullable: false),
-                    price = table.Column<long>(nullable: false)
+                    orderId = table.Column<int>(nullable: false),
+                    foodId = table.Column<int>(nullable: false),
+                    price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderDetail", x => x.id);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Order_orderID",
-                        column: x => x.orderID,
-                        principalTable: "Order",
+                        name: "FK_OrderDetail_Food_foodId",
+                        column: x => x.foodId,
+                        principalTable: "Food",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Food_pizzaID",
-                        column: x => x.pizzaID,
-                        principalTable: "Food",
+                        name: "FK_OrderDetail_Order_orderId",
+                        column: x => x.orderId,
+                        principalTable: "Order",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -146,20 +146,25 @@ namespace Pizza.Migrations
                 columns: new[] { "id", "address", "email", "latitude", "longitude", "phone" },
                 values: new object[] { 1, "Kyiv, Ukraine", "prijmakvlad7@gmail.com", 50.450099999999999, 30.523399999999999, "+380933613299" });
 
+            migrationBuilder.InsertData(
+                table: "Contacts",
+                columns: new[] { "id", "address", "email", "latitude", "longitude", "phone" },
+                values: new object[] { 2, null, "andreyzet08a@icloud.com", 50.450099999999999, 30.523399999999999, "+380970494450" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Food_categoryID",
                 table: "Food",
                 column: "categoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_orderID",
+                name: "IX_OrderDetail_foodId",
                 table: "OrderDetail",
-                column: "orderID");
+                column: "foodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_pizzaID",
+                name: "IX_OrderDetail_orderId",
                 table: "OrderDetail",
-                column: "pizzaID");
+                column: "orderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PizzaCartItem_foodid",

@@ -19,12 +19,12 @@ namespace Pizza.Data.Repository
             this.shopCart = shopCart;
         }
 
-        public void createOrder(Models.Order order)
+        public void createOrder(Order order)
         {
             order.orderTime = DateTime.Now;
-            appDBcontent.Order.Add(order);
-            appDBcontent.SaveChanges();
 
+            appDBcontent.Order.Add(order);
+            appDBcontent.SaveChanges(); // <- щоб з'явився order.id
 
             var items = shopCart.listPizzaItems;
 
@@ -32,13 +32,14 @@ namespace Pizza.Data.Repository
             {
                 var orderDetail = new OrderDetail()
                 {
-                    pizzaID = el.food.id, 
-                    orderID = order.id,
-                    price = el.food.price 
+                    foodId = el.food.id,
+                    orderId = order.id,
+                    price = el.food.price
                 };
-                appDBcontent.OrderDetail.Add(orderDetail);
 
+                appDBcontent.OrderDetail.Add(orderDetail);
             }
+
             appDBcontent.SaveChanges();
         }
     }
