@@ -8,6 +8,20 @@ namespace Pizza.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Login = table.Column<string>(nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
@@ -142,6 +156,11 @@ namespace Pizza.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Admins",
+                columns: new[] { "Id", "Login", "PasswordHash" },
+                values: new object[] { 1, "admin", "AQAAAAEAACcQAAAAECB9Qxcbkfc5xwVi8mn0HtLcgv3PtGSVM6yulf68RxjQUb47FI+LB0cd+0KfdR4yRQ==" });
+
+            migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "id", "address", "email", "latitude", "longitude", "phone" },
                 values: new object[] { 1, "Kyiv, Ukraine", "prijmakvlad7@gmail.com", 50.450099999999999, 30.523399999999999, "+380933613299" });
@@ -149,7 +168,7 @@ namespace Pizza.Migrations
             migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "id", "address", "email", "latitude", "longitude", "phone" },
-                values: new object[] { 2, null, "andreyzet08a@icloud.com", 50.450099999999999, 30.523399999999999, "+380970494450" });
+                values: new object[] { 2, "Kyiv, Ukraine", "andreyzet08a@icloud.com", 50.450099999999999, 30.523399999999999, "+380970494450" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Food_categoryID",
@@ -174,6 +193,9 @@ namespace Pizza.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admins");
+
             migrationBuilder.DropTable(
                 name: "Contacts");
 

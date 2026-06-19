@@ -47,6 +47,7 @@ namespace Pizza
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseHttpsRedirection();
 
             using (var scope = app.ApplicationServices.CreateScope())
             {
